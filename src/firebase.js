@@ -1,5 +1,6 @@
-import firebase from 'firebase/app'
-import 'firebase/auth'
+import { initializeApp } from "firebase/app";
+import {getAuth} from 'firebase/auth'
+
 
 /**
  * firebase alinca direk boyle ama biy dkendimiz duyenlicegiy kodleri bir kismi silindi
@@ -17,18 +18,19 @@ import 'firebase/auth'
   ama biy yeniden yapacagiy
 
  */
-const app =firebase.initializeApp({
-     
-    apiKey:process.env.REACT_APP_FIREBASE_API_KEY,
-    authDomain:process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-    projectId:process.env.REACT_APP_FIREBASE_PROJECTID,
-    storageBucket:process.env.REACT_APP_FIREBASE_STORAGEBUCKET,
-    messagingSenderId:process.env.REACT_APP_FIREBASE_MESSAGINSENDERID,
-    appId:process.env.REACT_APP_FIREBASE_APPID
-
-})
+  const firebaseConfig = {
+    apiKey: "AIzaSyAI8Nfcppf9YSa1gdkRbjtHYmHZMIamT9s",
+    authDomain: "loginreact-df48a.firebaseapp.com",
+    projectId: "loginreact-df48a",
+    storageBucket: "loginreact-df48a.appspot.com",
+    messagingSenderId: "659289272402",
+    appId: "1:659289272402:web:ea46c70b4714a1295b2f8b"
+  };
 
 //degiskeni dogrulamak icin disariya aktariyoruz
-export const auth =app.auth()
+
  
+const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app)
+
 export default app
