@@ -1,12 +1,14 @@
 import React, { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 //import { useUserAuth } from '../context/AuthContext'
-import { register } from "../firebase";
+import { login } from "../firebase";
 
-const Signup = () => {
+const Login = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
-  const passwordConfirmRef = useRef();
+  const navi = useNavigate();
+
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -16,13 +18,10 @@ const Signup = () => {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      return setError("password do not match");
-    }
-
     try {
       setLoading(true);
-      await register(emailRef.current.value, passwordRef.current.value);
+      await login(emailRef.current.value, passwordRef.current.value);
+      navi("/");
     } catch {
       setError("FAIILED TO CREATE AN COUNT");
     }
@@ -46,7 +45,7 @@ const Signup = () => {
     <div>
       <Card>
         <Card.Body>
-          <h2 className="text-center  mb-4">Signup </h2>
+          <h2 className="text-center  mb-4">LOGIN </h2>
           {error && <Alert variant="danger">{error}</Alert>}
         </Card.Body>
         <Form onSubmit={handleSubmit}>
@@ -60,22 +59,13 @@ const Signup = () => {
             <Form.Control type="Password" ref={passwordRef} required />
           </Form.Group>
 
-          <Form.Group id="password-confirm">
-            <Form.Label>Password-confirm</Form.Label>
-            <Form.Control type="password" ref={passwordConfirmRef} required />
-          </Form.Group>
-
           <Button disabled={loading} className="w-100" type="submit">
-            Signup up
+            LOGIN
           </Button>
         </Form>
       </Card>
-
-      <div className="w-100 text-center mt-2">
-        Already have an account ? login
-      </div>
     </div>
   );
 };
 
-export default Signup;
+export default Login;
